@@ -3,6 +3,9 @@ Cliente para uso del API de workbeat en .NET
 
 Este es cliente para utilizar las APIs de Workbeat, desarrollado en .NET.
 
+##Compilación
+Esta librería esta generada en Visual Studio 2012 usando .NET 4.0, aunque puede ser compilada sin problemas en Visual Studio 2010.
+
 ## Uso
 
 Las APIs de workbeat son basadas en REST, utilizando un flujo de OAuth como medio de Autorizacion/Autentificacion. 
