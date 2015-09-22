@@ -79,7 +79,7 @@ Regresa el resultado en un string formato JSON.
 |Parámetro|Descripcion|
 |---|---|
 |path|Ruta al recurso invocado.
-|jsonData| String con formato JSON con los parámetros necesarios para la llamada.
+|jsonData| Opcional. String con formato JSON con los parámetros necesarios para la llamada.
 
 Ejemplo:
 ```vbnet
@@ -117,7 +117,7 @@ Utilizado normalmente para crear un nuevo recurso (empleado, posicion, etc). En 
 |Parámetro|Descripcion|
 |---|---|
 |path|Ruta al recurso invocado.
-|jsonData| String con formato JSON con los parámetros necesarios para la llamada.
+|jsonData| Opcional. String con formato JSON con los parámetros necesarios para la llamada.
 
 #### Resultado
 Normalmente, la creación de un recurso, regresa un string con una representación JSON del mismo. Esta representación incluye el identificador asignado por workbeat al recurso recién creado.
@@ -130,27 +130,24 @@ Utilizado para actualizar ciertos tipos de recursos. Dependiendo del recurso, es
 |Parámetro|Descripcion|
 |---|---|
 |path|Ruta al recurso invocado.
-|jsonData| String con formato JSON con los parámetros necesarios para la llamada.
+|jsonData| Opcional. String con formato JSON con los parámetros necesarios para la llamada.
 
 #### Resultado
 Normalmente, la actualización de un recurso, regresa un string con una representación JSON del mismo.
 
 
-### delete(resourcePath As String, Optional jsonData As String = "")
+### delete(resourcePath As String, jsonData As String)
 Utilizado para borrar un recurso. Normalmente solo regresa un código de status 200 cuando se pudo hacer el borrado sin problemas.
 
 #### Parámetros
 |Parámetro|Descripcion|
 |---|---|
 |resourcePath|Ruta al recurso invocado.
-|jsonData| String con formato JSON con los parámetros necesarios para la llamada.
+|jsonData| Opcional. String con formato JSON con los parámetros necesarios para la llamada.
 
 
 #### Resultado
 Como resultado de un borrado, se regresa un código de error. El código 200 significa que el recurso fue borrado correctamente.
-
-
-
 
 
 ## Referencia/documentación de APIs
