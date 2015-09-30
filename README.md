@@ -154,4 +154,4 @@ Como resultado de un borrado, se regresa un código de error. El código 200 sig
 
 
 ## Referencia/documentación de APIs
-La [documentación del API de workbeat](http://workbeat.github.io/Workbeat.API/docs/) está siempre siendo actualizada. Esta puede ser consultada [aquí](http://workbeat.github.io/Workbeat.API/docs/)
+La [documentación del API de workbeat](http://workbeat.github.io/API/docs/) está siempre siendo actualizada. Esta puede ser consultada [aquí](http://workbeat.github.io/API/docs/)
