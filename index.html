@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Workbeat.api by Workbeat</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Workbeat.api</h1>
+        <p>Cliente para uso del API de workbeat en .NET</p>
+        <p class="view"><a href="https://github.com/Workbeat/Workbeat.API">View the Project on GitHub <small>Workbeat/Workbeat.API</small></a></p>
+        <ul>
+          <li><a href="https://github.com/Workbeat/Workbeat.API/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/Workbeat/Workbeat.API/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/Workbeat/Workbeat.API">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="workbeatapi-client" class="anchor" href="#workbeatapi-client" aria-hidden="true"><span class="octicon octicon-link"></span></a>Workbeat.API Client</h1>
+
+<p>Cliente para uso del API de workbeat en .NET</p>
+
+<p>Este es cliente para utilizar las APIs de Workbeat, desarrollado en .NET.</p>
+
+<h2>
+<a id="compilación" class="anchor" href="#compilaci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compilación</h2>
+
+<p>Esta librería esta generada en Visual Studio 2012 usando .NET 4.0, aunque puede ser compilada sin problemas en Visual Studio 2010.</p>
+
+<h2>
+<a id="uso" class="anchor" href="#uso" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uso</h2>
+
+<p>Las APIs de workbeat son basadas en REST, utilizando un flujo de OAuth como medio de Autorizacion/Autentificacion. 
+Este cliente utiliza exclusivamente el flujo de client_credentials, por lo que solo puede ser utilizado en un ambiente 
+de servidor, donde el client_secret esté seguro.</p>
+
+<p><strong>Este cliente actualmente NO es seguro para utilizarse en aplicaciones las cuales expongan el client_secret de la aplicacion.</strong>
+No debe ser usado en aplicaciones de Desktop que son instaladas en computadoras para un usuario final o en las que las llamadas del API son contextuales al usuario. Por su misma naturaleza, este cliente al acceder a las APIs lo hace como administrador y tiene acceso a todas las funciones con todos los permisos.</p>
+
+<h3>
+<a id="constructor" class="anchor" href="#constructor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Constructor</h3>
+
+<h4>
+<a id="parámetros" class="anchor" href="#par%C3%A1metros" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parámetros</h4>
+
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Descripcion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apiUrl</td>
+<td>Opcional. Url donde se encuentra el API de Workbeat. default:<a href="https://api.workbeat.com:3000/">https://api.workbeat.com:3000/</a>
+</td>
+</tr>
+</tbody>
+</table>
+
+<div class="highlight highlight-source-vbnet"><pre>  <span class="pl-k">Dim</span> api <span class="pl-k">As </span><span class="pl-c1">New</span> Workbeat<span class="pl-k">.</span>API<span class="pl-k">.</span>Client()</pre></div>
+
+<p>... ó tambien... </p>
+
+<div class="highlight highlight-source-vbnet"><pre>  <span class="pl-k">Dim</span> url <span class="pl-k">as </span><span class="pl-c1">String</span> <span class="pl-k">=</span> <span class="pl-s">"https://api.workbeat.com:3000/"</span>
+  <span class="pl-k">Dim</span> api <span class="pl-k">As </span><span class="pl-c1">New</span> Workbeat<span class="pl-k">.</span>API<span class="pl-k">.</span>Client(url)</pre></div>
+
+<h3>
+<a id="connect" class="anchor" href="#connect" aria-hidden="true"><span class="octicon octicon-link"></span></a>Connect</h3>
+
+<p>Para utilizar las APIs de Workbeat, es necesario primero hacer la conexión, para autentificar al cliente.</p>
+
+<h4>
+<a id="parámetros-1" class="anchor" href="#par%C3%A1metros-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parámetros</h4>
+
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Descripcion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>client_id</td>
+<td>Identificador de la aplicación externa generada por Workbeat.</td>
+</tr>
+<tr>
+<td>client_secret</td>
+<td>Contraseña de la aplicación externa. Esta contraseña es generada por Workbeat.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="resultado" class="anchor" href="#resultado" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resultado</h4>
+
+<p>Al llamar al método Connect, se regresa un objeto de clase APIResultCode. Este objeto contiene un código, el cual indica si existió un error o se pudo conectar correctamente. En caso de conectarse correctamente, en la propiedad <em>code</em> se regresa un código 200. En cualquier otro caso, puede regresar un número, basado en códigos de error de HTTP</p>
+
+<div class="highlight highlight-source-vbnet"><pre>        <span class="pl-k">Dim</span> client_id <span class="pl-k">as </span><span class="pl-c1">String</span> <span class="pl-k">=</span> <span class="pl-s">"My Client Id"</span>
+        <span class="pl-k">Dim</span> client_secret <span class="pl-k">as </span><span class="pl-c1">String</span> <span class="pl-k">=</span> <span class="pl-s">"My Client Secret"</span>
+        <span class="pl-k">Dim</span> api <span class="pl-k">As </span><span class="pl-c1">New</span> Workbeat<span class="pl-k">.</span>API<span class="pl-k">.</span>Client()
+        <span class="pl-k">Dim</span> res <span class="pl-k">As </span>Workbeat<span class="pl-k">.</span>API<span class="pl-k">.</span>APIResultCode <span class="pl-k">=</span> api<span class="pl-k">.</span>Connect(clientId, clientSecret)
+
+        <span class="pl-k">If</span> res<span class="pl-k">.</span>code<span class="pl-k">=</span><span class="pl-c1">200</span> <span class="pl-k">Then</span>
+          <span class="pl-c">' Ok... continuar ...</span>
+
+        <span class="pl-k">Else</span>
+          <span class="pl-c">'... Error de conexion.</span>
+          <span class="pl-k">If</span> res<span class="pl-k">.</span>code <span class="pl-k">=</span> <span class="pl-c1">403</span> <span class="pl-k">Then</span>
+            <span class="pl-c">' error de autentificacion </span>
+          <span class="pl-k">End If</span>
+        <span class="pl-k">End If</span>
+</pre></div>
+
+<p>La clase APIResultCode viene definida de la siguiente manera:</p>
+
+<div class="highlight highlight-source-vbnet"><pre><span class="pl-k">Public</span> <span class="pl-k">Class</span> <span class="pl-en">APIResultCode</span>
+    <span class="pl-k">Public</span> code <span class="pl-k">As </span><span class="pl-c1">Integer</span>
+    <span class="pl-k">Public</span> message <span class="pl-k">As </span><span class="pl-c1">String</span>
+    <span class="pl-k">Public</span> [error] <span class="pl-k">As </span><span class="pl-c1">String</span>
+<span class="pl-k">End Class</span></pre></div>
+
+<h2>
+<a id="métodos" class="anchor" href="#m%C3%A9todos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Métodos</h2>
+
+<p>El API, como se dijo anteriormente, está basada en REST, por lo que solo se necesitan los siguientes métodos.</p>
+
+<h3>
+<a id="getpath-as-string-jsondata-as-string" class="anchor" href="#getpath-as-string-jsondata-as-string" aria-hidden="true"><span class="octicon octicon-link"></span></a>get(path as String, jsonData as String)</h3>
+
+<p>El método <strong>get</strong> es utilizado para traer información acerca del recurso especificado. Éste método no modifica el recurso.
+Regresa el resultado en un string formato JSON. </p>
+
+<h4>
+<a id="parámetros-2" class="anchor" href="#par%C3%A1metros-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parámetros</h4>
+
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Descripcion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td>Ruta al recurso invocado.</td>
+</tr>
+<tr>
+<td>jsonData</td>
+<td>Opcional. String con formato JSON con los parámetros necesarios para la llamada.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Ejemplo:</p>
+
+<div class="highlight highlight-source-vbnet"><pre>
+<span class="pl-k">Dim</span> m_apiUrl <span class="pl-k">As </span><span class="pl-c1">String</span> <span class="pl-k">=</span> <span class="pl-s">"https://api.workbeat.com:3000/"</span>
+<span class="pl-k">Dim</span>  clientId <span class="pl-k">As </span><span class="pl-c1">String</span> <span class="pl-k">=</span> <span class="pl-s">"mi-client-id"</span>
+<span class="pl-k">Dim</span> clientSecret <span class="pl-k">As </span><span class="pl-c1">String</span> <span class="pl-k">=</span> <span class="pl-s">"mi-client-secret"</span>
+<span class="pl-c">' NOTA: Asegurarse que la aplicacion (client_id) tiene permiso de acceder al modulo de adm.</span>
+<span class="pl-k">Dim</span> api <span class="pl-k">As </span><span class="pl-c1">New</span> Workbeat<span class="pl-k">.</span>API<span class="pl-k">.</span>Client(m_apiUrl)
+<span class="pl-k">Dim</span> res <span class="pl-k">As </span>Workbeat<span class="pl-k">.</span>API<span class="pl-k">.</span>APIResultCode <span class="pl-k">=</span> api<span class="pl-k">.</span>Connect(clientId, clientSecret)
+<span class="pl-k">If</span> res<span class="pl-k">.</span>code <span class="pl-k">=</span> <span class="pl-c1">200</span> <span class="pl-k">Then</span>
+  <span class="pl-k">Dim</span> result <span class="pl-k">As </span><span class="pl-c1">String</span> <span class="pl-k">=</span> api<span class="pl-k">.</span>get(<span class="pl-s">"adm/empleados"</span>, <span class="pl-c1">Nothing</span>)
+  <span class="pl-k">If</span> result<span class="pl-k">.</span>IndexOf(<span class="pl-s">"apellidoPaterno"</span>) <span class="pl-k">&gt;</span> <span class="pl-c1">0</span> <span class="pl-k">Then</span>
+     <span class="pl-c">'Procesar resultado</span>
+  <span class="pl-k">Else</span>
+    <span class="pl-c">' No se encontro un resultado</span>
+  <span class="pl-k">End If</span>
+
+  <span class="pl-c">' Llamada que regresa un listado de empleados, con un filtro como parámetro</span>
+  result <span class="pl-k">=</span> api<span class="pl-k">.</span>get(<span class="pl-s">"adm/empleados"</span>, <span class="pl-s">"{""filtro"":""Armando""}"</span>)
+  <span class="pl-k">If</span> result<span class="pl-k">.</span>IndexOf(<span class="pl-s">"Armando"</span>) <span class="pl-k">&gt;</span> <span class="pl-c1">0</span> <span class="pl-k">Then</span>
+     <span class="pl-c">'Procesar resultado</span>
+  <span class="pl-k">Else</span>
+    <span class="pl-c">' No se encontro un resultado</span>
+  <span class="pl-k">End If</span>
+
+<span class="pl-k">End If</span></pre></div>
+
+<h3>
+<a id="postresourcepath-as-string-jsondata-as-string" class="anchor" href="#postresourcepath-as-string-jsondata-as-string" aria-hidden="true"><span class="octicon octicon-link"></span></a>post(resourcePath As String, jsonData As String)</h3>
+
+<p>Utilizado normalmente para crear un nuevo recurso (empleado, posicion, etc). En algunos casos puede ser utilizado para actualizar un recurso.</p>
+
+<h4>
+<a id="parámetros-3" class="anchor" href="#par%C3%A1metros-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parámetros</h4>
+
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Descripcion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td>Ruta al recurso invocado.</td>
+</tr>
+<tr>
+<td>jsonData</td>
+<td>Opcional. String con formato JSON con los parámetros necesarios para la llamada.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="resultado-1" class="anchor" href="#resultado-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resultado</h4>
+
+<p>Normalmente, la creación de un recurso, regresa un string con una representación JSON del mismo. Esta representación incluye el identificador asignado por workbeat al recurso recién creado.</p>
+
+<h3>
+<a id="putresourcepath-as-string-jsondata-as-string-as-string" class="anchor" href="#putresourcepath-as-string-jsondata-as-string-as-string" aria-hidden="true"><span class="octicon octicon-link"></span></a>put(resourcePath As String, jsonData As String) As String</h3>
+
+<p>Utilizado para actualizar ciertos tipos de recursos. Dependiendo del recurso, este puede ser actualizado ya sea con put o post.</p>
+
+<h4>
+<a id="parámetros-4" class="anchor" href="#par%C3%A1metros-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parámetros</h4>
+
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Descripcion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>path</td>
+<td>Ruta al recurso invocado.</td>
+</tr>
+<tr>
+<td>jsonData</td>
+<td>Opcional. String con formato JSON con los parámetros necesarios para la llamada.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="resultado-2" class="anchor" href="#resultado-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resultado</h4>
+
+<p>Normalmente, la actualización de un recurso, regresa un string con una representación JSON del mismo.</p>
+
+<h3>
+<a id="deleteresourcepath-as-string-jsondata-as-string" class="anchor" href="#deleteresourcepath-as-string-jsondata-as-string" aria-hidden="true"><span class="octicon octicon-link"></span></a>delete(resourcePath As String, jsonData As String)</h3>
+
+<p>Utilizado para borrar un recurso. Normalmente solo regresa un código de status 200 cuando se pudo hacer el borrado sin problemas.</p>
+
+<h4>
+<a id="parámetros-5" class="anchor" href="#par%C3%A1metros-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parámetros</h4>
+
+<table>
+<thead>
+<tr>
+<th>Parámetro</th>
+<th>Descripcion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>resourcePath</td>
+<td>Ruta al recurso invocado.</td>
+</tr>
+<tr>
+<td>jsonData</td>
+<td>Opcional. String con formato JSON con los parámetros necesarios para la llamada.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="resultado-3" class="anchor" href="#resultado-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resultado</h4>
+
+<p>Como resultado de un borrado, se regresa un código de error. El código 200 significa que el recurso fue borrado correctamente.</p>
+
+<h2>
+<a id="referenciadocumentación-de-apis" class="anchor" href="#referenciadocumentaci%C3%B3n-de-apis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Referencia/documentación de APIs</h2>
+
+<p>La documentación del API de workbeat está siendo generada. En una versión subsecuente de este documento, estará aquí la liga a la documentacion completa del API.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/Workbeat">Workbeat</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
